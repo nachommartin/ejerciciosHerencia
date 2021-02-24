@@ -1,6 +1,8 @@
 package Cuenta;
 
 import java.util.Scanner;
+import java.time.LocalDate;
+
 
 public class MainCuentas {
 	
@@ -33,6 +35,18 @@ public class MainCuentas {
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		CuentaJoven c3 = new CuentaJoven ("Pedro",LocalDate.parse("1999-11-13"),"34567", 20.0);
+		try {
+		c3.mostrar();
+		System.out.println(c3);
+		System.out.println("Introduce la cantidad a reintegrar");
+		cant = Double.parseDouble(teclado.nextLine());
+		c3.reintegro(cant);
+		c3.mostrar();
+		}catch (Exception e) {
+		System.out.println(e.getMessage());
+		}
+
 		
 
 	}
