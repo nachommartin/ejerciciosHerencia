@@ -44,7 +44,8 @@ this.fechaNacimiento = fechaNacimiento;
 
 @Override
 public String toString() {
-return "Esta cuenta es de " + titular + " con un número de cuenta "  + getNumCuenta() + "";
+double SaldoBonificado = super.getSaldo() + (super.getSaldo()*this.BONIFICACION);
+return "Esta cuenta es de " + titular + " con un número de cuenta "  + getNumCuenta() + " con un saldo de " + SaldoBonificado + "";
 }
 public boolean esTitularValido() {
 LocalDate fechaCumple= this.fechaNacimiento;
@@ -57,18 +58,7 @@ return false;
 }
 }
 
-public void reintegro(double cant) throws Exception {
-if (cant <= super.getSaldo() && cant >0) {
-super.setSaldo(super.getSaldo()-cant);
-}else {
-throw new Exception (msg2);
-}
+
 
 }
 
-public void mostrar () {
-double SaldoBonificado = super.getSaldo() + (super.getSaldo()*this.BONIFICACION);
-System.out.println("" + toString() + " con un saldo de " + SaldoBonificado + "" );
-}
-
-}
