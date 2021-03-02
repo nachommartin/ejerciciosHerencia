@@ -13,8 +13,10 @@ private Barco barco;
 private static final int VALORFIJO= 20;
 
 
-public Alquiler(String nombre, String DNI, LocalDate fechaFinal, int amarre, Barco barco) {
+public Alquiler(String nombre, String DNI, LocalDate fechaFinal, int amarre, Barco barco) throws Exception {
 super();
+if (fechaFinal.isBefore(this.fechaInicial) || fechaFinal==null) {
+throw new AlquilerException ("La fecha debe ser anterior");}
 this.nombre = nombre;
 this.DNI = DNI;
 this.fechaFinal= fechaFinal;
