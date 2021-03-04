@@ -9,7 +9,7 @@ private static final double PRECIODIESEL = 2;
 public Coche(String matricula, String gama, String carburante) throws VehiculoException {
 	super(matricula, gama);
 	// TODO Auto-generated constructor stub
-	if (!this.carburante.equals("gasolina") && !this.carburante.equals("diesel")) {
+	if (!carburante.equals("gasolina") && !carburante.equals("diesel")) {
 		throw new VehiculoException ("La gama no es la correcta");}
 	this.carburante=carburante;
 }
