@@ -31,6 +31,16 @@ public class Juego {
 		}
 		
 		
-
+		public void crearJugador(char caracter) {
+		}
 		
+		private void crearRoca () {
+		int fila, col;
+			do {
+			fila = (int) (Math.random() * this.alto);
+			col = (int) (Math.random() * this.ancho);
+			} while (tablero[fila][col] != null);
+
+			
+		}
 }
