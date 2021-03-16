@@ -11,7 +11,7 @@ public abstract class Elemento {
 	
 	@Override
 	public String toString() {
-		return "Elemento [simbolo=" + simbolo + "]";
+		return "" + simbolo;
 	}
 	
 	@Override

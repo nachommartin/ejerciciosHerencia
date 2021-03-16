@@ -11,7 +11,6 @@ import JuegoJaca.Gema;
 import JuegoJaca.Elemento;
 
 public class Juego {
-		
 		private Elemento tablero[][]; 
 		private Jugador jugadores[];
 		private int alto= Constante.ALTO;
@@ -35,6 +34,7 @@ public class Juego {
 			super();
 			this.numJugadores = numJugadores;
 			crearTablero();
+
 		} 
 		
 		private void crearTablero() {
@@ -43,6 +43,7 @@ public class Juego {
 			crearGema(); 
 			crearPocion(); 
 			crearDinero(); 
+			crearArbol();
 		}
 		
 		
@@ -58,8 +59,8 @@ public class Juego {
 		private void crearRoca () {
 		int fila, col;
 			do {
-			fila = (int) (Math.random() * (this.alto-1));
-			col = (int) (Math.random() * (this.ancho-1));
+			fila = (int) (Math.random() * this.alto-1);
+			col = (int) (Math.random() * this.ancho-1);
 			} while (tablero[fila][col] != null);
 			tablero[fila][col]=new Roca(Constante.ROCA);			
 		}
@@ -72,7 +73,7 @@ public class Juego {
 				} while (tablero[fila][col] != null);
 				tablero[fila][col]=new Gema(Constante.GEMA);			
 		}
-		
+
 		private void crearPocion () {
 			int fila, col;
 				do {
@@ -81,7 +82,7 @@ public class Juego {
 				} while (tablero[fila][col] != null);
 				tablero[fila][col]=new Pocion(Constante.POCION);			
 			}
-			
+
 		private void crearDinero () {
 			int fila, col;
 				do {
@@ -90,7 +91,16 @@ public class Juego {
 				} while (tablero[fila][col] != null);
 				tablero[fila][col]=new Dinero (Constante.DINERO);			
 			}
-			
+		
+		private void crearArbol () {
+			int fila, col;
+				do {
+				fila = (int) (Math.random() * this.alto-1);
+				col = (int) (Math.random() * this.ancho-1);
+				} while (tablero[fila][col] != null);
+				tablero[fila][col]=new Dinero (Constante.ARBOL);			
+			}
+		
 		
 		@Override
 		public String toString() {
@@ -99,12 +109,13 @@ public class Juego {
 			for(fila = 0; fila < Constante.ALTO-1; fila++){ 
 				resul.append("|");
 				for(col = 0; col < Constante.ANCHO-1; col++){ 
-					resul.append("_");} 
+					resul.append("_");
 					if (tablero[fila][col]== null) {
 					resul.append(" |");} 
 					else {
 						resul.append(tablero[fila][col] + "|");} 
 				}
+			}
 			return resul.toString();
 			}
 
