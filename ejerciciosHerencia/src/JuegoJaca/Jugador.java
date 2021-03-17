@@ -115,7 +115,7 @@ public class Jugador extends Elemento{
 	
 	@Override
 	public String toString() {
-		return "Jugador [toString()=" + super.toString() + "]";
+		return "" + super.toString();
 	}
 	
 	
