@@ -4,6 +4,8 @@ import JuegoJaca.Elemento;
 import JuegoJaca.Jugador;
 import JuegoJaca.Roca;
 import java.util.Arrays;
+
+import Barco.AlquilerException;
 import JuegoJaca.Arbol;
 import JuegoJaca.Dinero;
 import JuegoJaca.Pocion;
@@ -13,8 +15,6 @@ import JuegoJaca.Elfo;
 import JuegoJaca.Guerrero;
 import JuegoJaca.Mago;
 import JuegoJaca.Ogro;
-
-
 
 
 public class Juego {
@@ -28,19 +28,27 @@ public class Juego {
 		private int jugadorJuega;
 		
 		
-		public Juego(int alto, int ancho, int numJugadores) {
+		public Juego(int alto, int ancho, int numJugadores) throws JuegoException {
 			super();
+			if (numJugadores<2 || numJugadores>6) {
+				throw new JuegoException ("Número de jugadores incorrecto");}
 			this.alto = alto;
 			this.ancho = ancho;
 			this.numJugadores = numJugadores;
+			this.jugadores= new Jugador [numJugadores];
+			this.jugadorJuega= (int) (Math.random() * numJugadores);
 			crearTablero();
 
 		}
 
 
-		public Juego(int numJugadores) {
+		public Juego(int numJugadores) throws JuegoException {
 			super();
+			if (numJugadores<2 || numJugadores>6) {
+				throw new JuegoException ("Número de jugadores incorrecto");}
 			this.numJugadores = numJugadores;
+			this.jugadores= new Jugador [numJugadores];
+			this.jugadorJuega= (int) (Math.random() * numJugadores);
 			crearTablero();
 		} 
 		
@@ -63,8 +71,7 @@ public class Juego {
 			
 			int aux;
 			boolean encontrado=false;
-			this.jugadores= new Jugador [numJugadores];
-			for (aux=0; aux <this.numJugadores-1 && !encontrado; aux++) {
+			for (aux=0; aux <=numJugadores-1 && !encontrado; aux++) {
 				if (jugadores[aux]==null) {
 					encontrado=true;  }
 				} /*posicion array*/
@@ -180,5 +187,31 @@ public class Juego {
 			resul.append(barra());
 			return resul.toString();
 			}
-
+		
+		public boolean isTerminado() {
+			return finished;
+		}
+		
+		public String imprimeNombreJugadores() {
+		StringBuilder cadena = new StringBuilder();
+		int aux; 
+		for (aux = 0; aux < numJugadores-1; aux++){ 
+			cadena.append(jugadores[aux] + "\n");
+		}
+		return cadena.toString(); 	
+		}
+		
+		public String imprimeValoreJugadores() {
+			StringBuilder cadena = new StringBuilder();
+			int aux; 
+			for (aux = 0; aux < numJugadores-1; aux++){ 
+				cadena.append(jugadores[aux].Resumen() + "\n");
+			}
+			return cadena.toString();
+		}
+		
+	
+	
+		
+		
 }

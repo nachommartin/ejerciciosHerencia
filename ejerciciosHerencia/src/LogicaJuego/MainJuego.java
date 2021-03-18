@@ -1,5 +1,7 @@
 package LogicaJuego;
 import java.util.Scanner;
+
+import Barco.AlquilerException;
 import JuegoJaca.Elemento;
 import JuegoJaca.Jugador;
 
@@ -8,8 +10,9 @@ public class MainJuego {
 	public static Scanner teclado = new Scanner(System.in);
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JuegoException  {
 		// TODO Auto-generated method stub
+		try {
 		int numJugadores = leerEntero("Cuántos jugadores?");
 		int aux;
 		Juego j = new Juego(numJugadores);
@@ -19,6 +22,10 @@ public class MainJuego {
 		j.crearJugador(caracter); 		
 		}
 		System.out.println(j);
+		}
+		catch (JuegoException je) {
+			System.out.println(je.getMessage());
+		} 
 		}
 		
 

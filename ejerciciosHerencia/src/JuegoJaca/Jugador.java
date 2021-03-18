@@ -110,7 +110,7 @@ public class Jugador extends Elemento{
 	
 	
 	public String Resumen() {
-		return "Jugador [dinero=" + dinero + ", pociones=" + pociones + ", gemas=" + gemas + "]";
+		return "Jugador " + super.getSimbolo() + " Dinero: " + dinero + " Pociones:" + pociones + " Gemas:" + gemas + "";
 	}
 	
 	@Override
