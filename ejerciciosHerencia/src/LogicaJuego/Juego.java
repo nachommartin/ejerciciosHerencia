@@ -210,7 +210,30 @@ public class Juego {
 			return cadena.toString();
 		}
 		
+		public String getJugadorTurno() {
+			StringBuilder cadena = new StringBuilder();
+				cadena.append(jugadores[jugadorJuega].getSimbolo() + "\n");
+			
+			return cadena.toString(); 
+		}
 	
+		
+		public int getMovimientoJugador() {
+				int resul= (int) (Math.random() * jugadores[jugadorJuega].getVelocidad());
+			return resul;
+		}
+		
+		public void compruebaFinJuego() {
+			int aux; 
+			for (aux = 0; aux < numJugadores-1; aux++){ 
+			if (jugadores.length ==1) {
+				isTerminado();}	
+			else if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
+				isTerminado();
+			}
+		
+		}
+		}
 	
 		
 		
