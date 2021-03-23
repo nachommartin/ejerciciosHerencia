@@ -212,8 +212,7 @@ public class Juego {
 		
 		public String getJugadorTurno() {
 			StringBuilder cadena = new StringBuilder();
-				cadena.append(jugadores[jugadorJuega].getSimbolo() + "\n");
-			
+				cadena.append(jugadores[jugadorJuega].getSimbolo() + "\n");			
 			return cadena.toString(); 
 		}
 	
@@ -234,7 +233,87 @@ public class Juego {
 		
 		}
 		}
+		
+		private void eliminarJugador(Jugador j) {
+			int aux;
+			boolean salir=true;
+			for (aux =0; aux<numJugadores-1 && salir; aux++){
+		        if (jugadores[aux]==j) {
+		        	jugadores[aux]=null;
+		        	salir=false;
+		        };		
+		}
+		}
+		
+		public void proximoJugador() {
+			do {
+				if (jugadorJuega==numJugadores-1) {
+				jugadorJuega=0; 
+				}
+				else {
+					jugadorJuega++;
+				}
+			}
+			while(jugadores[jugadorJuega]==null);
+		}
+		
+		private void irAPosicion (int x, int y) {
+			Jugador j= jugadores[jugadorJuega];
+			tablero[j.getFil()][j.getCol()]=null; 
+			j.setFil(x); 
+			j.setCol(y);
+			tablero[x][y]=j; 
+		}
+		
+	   private String encuentraArbol(Jugador j, int x, int y) {
+		   String cadena; 
+		   int magiaArbol = (int) (Math.random() * Constante.MAGIA_ARBOL);
+		   int magiaJugador= (int) (Math.random() * j.getMagia());
+		   if (magiaArbol<magiaJugador) {
+			   irAPosicion(x,y); 
+			   cadena= "Te has situado donde estaba el árbol";
+		   }
+		   else {
+			   cadena= "No has podido moverte hacia el árbol";
+			   
+		   }
+		   return cadena; 
+	   }
+	   
+	   private String encuentraRoca (Jugador j, int x, int y) {
+		   String cadena;
+		   if (j.getGemas()>=1) {
+			   irAPosicion(x,y); 
+			   cadena= "Te has situado donde estaba la roca";
+			   j.setGemas(j.getGemas()-1);
+		   }
+		   else {
+			   cadena= "No has podido moverte hacia la roca";
+		   }
+		   return cadena; 
+	   }
+	   
+	   private String lucha (Jugador j1, Jugador j2) {
+		   String cadena; 
+		   int fuerzaJugador1= (int) (Math.random() * j1.getFuerza());
+		   int fuerzaJugador2= (int) (Math.random() * j2.getFuerza());
+		   if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()==0) {
+			   eliminarJugador(j2); 
+			   cadena= "Has vencido al rival";
+		   }
+		   else if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()>=1) {
+			   j2.setPociones(j2.getPociones()-1);
+			   cadena= "Has vencido al rival";
+		   }
+		   else if (fuerzaJugador1<fuerzaJugador2 && j1.getPociones()>=1) {
+			   j1.setPociones(j1.getPociones()-1);
+			   cadena= "No has vencido al rival";
+		   }		   
+		   else {
+			   eliminarJugador(j1);
+			   cadena= "No has vencido al rival";
+		   }
+		   return cadena; 
+	   }
 	
-		
-		
-}
+	}
