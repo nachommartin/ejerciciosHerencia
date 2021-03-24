@@ -212,27 +212,34 @@ public class Juego {
 		
 		public String getJugadorTurno() {
 			StringBuilder cadena = new StringBuilder();
+				cadena.append("Es el turno de "); 
 				cadena.append(jugadores[jugadorJuega].getSimbolo() + "\n");			
 			return cadena.toString(); 
 		}
 	
 		
 		public int getMovimientoJugador() {
-				int resul= (int) (Math.random() * jugadores[jugadorJuega].getVelocidad());
+				int resul= (int) (Math.random() * jugadores[jugadorJuega].getVelocidad())+1;
 			return resul;
 		}
 		
 		public void compruebaFinJuego() {
-			int aux; 
+			int aux;
+			int contador=0; 
 			for (aux = 0; aux < numJugadores-1; aux++){ 
-			if (jugadores.length ==1) {
-				isTerminado();}	
-			else if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
-				isTerminado();
+			if (jugadores[aux] !=null) {
+				contador++; 
+							}
+			if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
+				this.finished=true;
 			}
+			}
+			if (contador==1) {
+				this.finished=true;
+			}
+				
+		}
 		
-		}
-		}
 		
 		private void eliminarJugador(Jugador j) {
 			int aux;
@@ -297,23 +304,86 @@ public class Juego {
 		   String cadena; 
 		   int fuerzaJugador1= (int) (Math.random() * j1.getFuerza());
 		   int fuerzaJugador2= (int) (Math.random() * j2.getFuerza());
-		   if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()==0) {
+		   if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()==0 && j2.getDinero()==0) {
 			   eliminarJugador(j2); 
-			   cadena= "Has vencido al rival";
+			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + "";
+		   }
+		   if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()==0 && j2.getDinero()>=1) {
+			   j1.setDinero(j2.getDinero());
+			   j2.setDinero(0);
+			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + "";
 		   }
 		   else if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()>=1) {
 			   j2.setPociones(j2.getPociones()-1);
-			   cadena= "Has vencido al rival";
+			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + "";
 		   }
 		   else if (fuerzaJugador1<fuerzaJugador2 && j1.getPociones()>=1) {
 			   j1.setPociones(j1.getPociones()-1);
-			   cadena= "No has vencido al rival";
-		   }		   
+			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + "";
+		   }	
+		   else if (fuerzaJugador1<fuerzaJugador2 && j1.getPociones()==0 && j1.getDinero()>=1) {
+			   j2.setDinero(j1.getDinero());
+			   j1.setDinero(0);
+			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + "";
+		   }
 		   else {
 			   eliminarJugador(j1);
-			   cadena= "No has vencido al rival";
+			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + "";
 		   }
 		   return cadena; 
+	   }
+	   
+	   public String getGanador() {
+		   String cadena=""; 
+		   int aux;
+			int contador=0; 
+			for (aux = 0; aux < numJugadores-1; aux++){ 
+			if (jugadores[aux] !=null) {
+				contador++; 
+							}
+			if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
+				cadena= "El ganador es " + jugadores[aux].toString();
+			}
+			}
+			if (contador==1) {
+				cadena= "El ganador es " + jugadores[aux].toString();
+			}
+		   return cadena;
+		   	   }
+	   
+	   public String moverJugador(char simbolo) {
+		   String cadena;
+		   int fila= jugadores[jugadorJuega].nextFil(simbolo); 
+		   int col= jugadores[jugadorJuega].nextCol(simbolo); 
+		   if (tablero[fila][col]== null) {
+			   irAPosicion(fila,col); 
+			   cadena= "El " + jugadores[jugadorJuega].toString() + " se ha movido"; 
+		   }
+		   else if (tablero[fila][col] instanceof Gema){
+			   irAPosicion(fila,col); 
+			   jugadores[jugadorJuega].setGemas(jugadores[jugadorJuega].getGemas()+1);	
+			   cadena= "El " + jugadores[jugadorJuega].toString() + " ha logrado una gema"; 
+		   }
+		   else if (tablero[fila][col] instanceof Dinero){
+			   irAPosicion(fila,col); 
+			   jugadores[jugadorJuega].setDinero(jugadores[jugadorJuega].getDinero()+1);	
+			   cadena= "El " + jugadores[jugadorJuega].toString() + " ha logrado dinero"; 
+		   }
+		   else if (tablero[fila][col] instanceof Pocion){
+			   irAPosicion(fila,col); 
+			   jugadores[jugadorJuega].setPociones(jugadores[jugadorJuega].getPociones()+1);	
+			   cadena= "El " + jugadores[jugadorJuega].toString() + " ha logrado una poción"; 
+		   }
+		   else if (tablero[fila][col] instanceof Roca){
+			   cadena= encuentraRoca (jugadores[jugadorJuega], fila, col); 
+		   }
+		   else if (tablero[fila][col] instanceof Arbol){
+			   cadena= encuentraArbol (jugadores[jugadorJuega], fila, col); 
+		   }
+		   else  {
+			   cadena= lucha(jugadores[jugadorJuega],(Jugador)tablero[fila][col]);	
+			   }
+		   return cadena;
 	   }
 	
 	}
