@@ -22,6 +22,19 @@ public class MainJuego {
 		j.crearJugador(caracter); 		
 		}
 		System.out.println(j);
+		System.out.println(j.imprimeNombreJugadores());
+		System.out.println(j.imprimeValoreJugadores());
+		System.out.println(j.getJugadorTurno());
+		int dado= j.getMovimientoJugador();
+		System.out.println("La tirada es " + dado);
+		
+		for (int aux2 = 0; aux2 < dado && !j.isTerminado(); aux2++ ) {
+			char direccion = leerCaracter("¿Elige orientación:\n (N)orte\n (S)ur\n (E)ste\n (O)este");
+			System.out.println(j.moverJugador(direccion));
+			System.out.println(j);
+			j.compruebaFinJuego();
+		}
+		j.proximoJugador();
 		}
 		catch (JuegoException je) {
 			System.out.println(je.getMessage());

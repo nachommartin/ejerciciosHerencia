@@ -1,4 +1,5 @@
 package JuegoJaca;
+import LogicaJuego.Constante; 
 
 public class Jugador extends Elemento{
 		
@@ -83,28 +84,28 @@ public class Jugador extends Elemento{
 	}
 
 	public int nextFil(Character fila) {
-		int aux= 0;
+		int aux= this.fil;
 		if (fila.equals('N') && this.fil==0) {
-			aux= 9;}
-		if (fila.equals('S') && this.fil==9) {
+			aux= Constante.ALTO-1;}
+		if (fila.equals('S') && this.fil==Constante.ALTO-1) {
 			aux= 0;}
 		if (fila.equals('N')) {
-			aux= this.fil-1;}
+			aux= this.fil--;}
 		if (fila.equals('S')) {
-			aux=this.fil+1;}
+			aux=this.fil++;}
 		return aux;
 	}
 	
 	public int nextCol(Character columna) {
-		int aux=0;
+		int aux=this.col;
 		if (columna.equals('O') && this.col==0) {
-			aux= 9;}
-		if (columna.equals('E') && this.col==9) {
+			aux= Constante.ANCHO-1;}
+		if (columna.equals('E') && this.col==Constante.ANCHO-1) {
 			aux= 0;}
 		if (columna.equals('O')) {
-			aux= this.col-1;}
+			aux= this.col--;}
 		if (columna.equals('E')) {
-			aux=this.col+1;}		
+			aux=this.col++;}		
 		return aux;	
 	}
 	

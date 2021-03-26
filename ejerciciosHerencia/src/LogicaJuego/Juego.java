@@ -19,10 +19,10 @@ import JuegoJaca.Ogro;
 
 public class Juego {
 		
-		private Elemento tablero[][]; 
+		protected Elemento tablero[][]; 
 		private Jugador jugadores[];
-		private int alto= Constante.ALTO;
-		private int ancho= Constante.ANCHO;
+		protected int alto= Constante.ALTO;
+		protected int ancho= Constante.ANCHO;
 		private int numJugadores;
 		private boolean finished=false;
 		private int jugadorJuega;
@@ -46,6 +46,8 @@ public class Juego {
 			super();
 			if (numJugadores<2 || numJugadores>6) {
 				throw new JuegoException ("Número de jugadores incorrecto");}
+			this.alto = Constante.ALTO;
+			this.ancho = Constante.ANCHO;
 			this.numJugadores = numJugadores;
 			this.jugadores= new Jugador [numJugadores];
 			this.jugadorJuega= (int) (Math.random() * numJugadores);
@@ -247,6 +249,7 @@ public class Juego {
 			for (aux =0; aux<numJugadores-1 && salir; aux++){
 		        if (jugadores[aux]==j) {
 		        	jugadores[aux]=null;
+		        	tablero[jugadores[aux].getFil()][jugadores[aux].getCol()]= null;
 		        	salir=false;
 		        };		
 		}
