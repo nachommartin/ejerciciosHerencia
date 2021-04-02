@@ -80,25 +80,25 @@ public class Juego {
 					
 			switch (caracter) {
 				case 'E':	{
-					Jugador j=new Elfo(Constante.NOMBRE_JUGADORES[aux-1], this.alto,this.ancho);
+					Jugador j=new Elfo(Constante.NOMBRE_JUGADORES[aux-1], fila,col);
 					tablero[fila][col]= j;
 					jugadores[aux-1]=j; 
 					break;
 				}
 				case 'G':	{
-					Jugador j=new Guerrero(Constante.NOMBRE_JUGADORES[aux-1], this.alto,this.ancho);
+					Jugador j=new Guerrero(Constante.NOMBRE_JUGADORES[aux-1], fila,col);
 					tablero[fila][col]= j;
 					jugadores[aux-1]=j; 
 					break;
 				}
 				case 'M':	{
-					Jugador j=new Mago (Constante.NOMBRE_JUGADORES[aux-1], this.alto,this.ancho);
+					Jugador j=new Mago (Constante.NOMBRE_JUGADORES[aux-1], fila,col);
 					tablero[fila][col]= j;
 					jugadores[aux-1]=j; 
 					break;
 				}
 				case 'O':	{
-					Jugador j=new Ogro(Constante.NOMBRE_JUGADORES[aux-1], this.alto,this.ancho);
+					Jugador j=new Ogro(Constante.NOMBRE_JUGADORES[aux-1], fila,col);
 					tablero[fila][col]= j;
 					jugadores[aux-1]=j; 
 					break;
@@ -111,8 +111,8 @@ public class Juego {
 		int aux;
 		for (aux= 0; aux < Constante.NUM_ROCAS; aux++) {
 			do {
-			fila = (int) (Math.random() * (this.alto-1));
-			col = (int) (Math.random() * (this.ancho-1));
+			fila = (int) (Math.random() * (this.alto));
+			col = (int) (Math.random() * (this.ancho));
 			} while (tablero[fila][col] != null);
 			tablero[fila][col]=new Roca(Constante.ROCA);			
 		}
@@ -123,8 +123,8 @@ public class Juego {
 			int aux; 
 			for (aux= 0; aux < Constante.NUM_GEMAS; aux++) {
 				do {
-				fila = (int) (Math.random() * this.alto-1);
-				col = (int) (Math.random() * this.ancho-1);
+				fila = (int) (Math.random() * this.alto);
+				col = (int) (Math.random() * this.ancho);
 				} while (tablero[fila][col] != null);
 				tablero[fila][col]=new Gema(Constante.GEMA);			
 		}
@@ -135,8 +135,8 @@ public class Juego {
 			int aux;
 			for (aux= 0; aux < Constante.NUM_POCIONES; aux++) {
 				do {
-				fila = (int) (Math.random() * this.alto-1);
-				col = (int) (Math.random() * this.ancho-1);
+				fila = (int) (Math.random() * this.alto);
+				col = (int) (Math.random() * this.ancho);
 				} while (tablero[fila][col] != null);
 				tablero[fila][col]=new Pocion(Constante.POCION);			
 			}
@@ -147,8 +147,8 @@ public class Juego {
 			int aux;
 			for (aux= 0; aux < Constante.NUM_DINERO; aux++) {
 				do {
-				fila = (int) (Math.random() * this.alto-1);
-				col = (int) (Math.random() * this.ancho-1);
+				fila = (int) (Math.random() * this.alto);
+				col = (int) (Math.random() * this.ancho);
 				} while (tablero[fila][col] != null);
 				tablero[fila][col]=new Dinero (Constante.DINERO);			
 			}
@@ -159,25 +159,25 @@ public class Juego {
 			int aux;
 			for (aux= 0; aux < Constante.NUM_ARBOLES; aux++) {
 				do {
-				fila = (int) (Math.random() * this.alto-1);
-				col = (int) (Math.random() * this.ancho-1);
+				fila = (int) (Math.random() * this.alto);
+				col = (int) (Math.random() * this.ancho);
 				} while (tablero[fila][col] != null);
-				tablero[fila][col]=new Dinero (Constante.ARBOL);			
+				tablero[fila][col]=new Arbol (Constante.ARBOL);			
 			}
 		}
 		
 		private String barra() {
-			return "----------------------------\n"; 
+			return "-------------------------------\n"; 
 		}
 		
 		@Override
 		public String toString() {
 			StringBuilder resul = new StringBuilder();
 			int fila, col;	
-			for(fila = 0; fila < Constante.ALTO-1; fila++){ 
+			for(fila = 0; fila <= Constante.ALTO-1; fila++){ 
 				resul.append(barra());
 				resul.append("|");
-				for(col = 0; col < Constante.ANCHO-1; col++){ 
+				for(col = 0; col <= Constante.ANCHO-1; col++){ 
 					resul.append(" ");
 					if (tablero[fila][col]== null) {
 					resul.append(" |");} 
@@ -197,7 +197,7 @@ public class Juego {
 		public String imprimeNombreJugadores() {
 		StringBuilder cadena = new StringBuilder();
 		int aux; 
-		for (aux = 0; aux < numJugadores-1; aux++){ 
+		for (aux = 0; aux <= numJugadores-1; aux++){ 
 			cadena.append(jugadores[aux] + "\n");
 		}
 		return cadena.toString(); 	
@@ -206,7 +206,7 @@ public class Juego {
 		public String imprimeValoreJugadores() {
 			StringBuilder cadena = new StringBuilder();
 			int aux; 
-			for (aux = 0; aux < numJugadores-1; aux++){ 
+			for (aux = 0; aux <= numJugadores-1; aux++){ 
 				cadena.append(jugadores[aux].Resumen() + "\n");
 			}
 			return cadena.toString();
@@ -388,5 +388,4 @@ public class Juego {
 			   }
 		   return cadena;
 	   }
-	
 	}
