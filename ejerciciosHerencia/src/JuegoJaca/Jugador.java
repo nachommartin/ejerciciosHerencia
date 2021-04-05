@@ -90,9 +90,9 @@ public class Jugador extends Elemento{
 		if (fila.equals('S') && this.fil==Constante.ALTO-1) {
 			aux= 0;}
 		if (fila.equals('N')) {
-			aux= this.fil--;}
+			aux= this.fil-1;}
 		if (fila.equals('S')) {
-			aux=this.fil++;}
+			aux=this.fil+1;}
 		return aux;
 	}
 	
@@ -103,9 +103,9 @@ public class Jugador extends Elemento{
 		if (columna.equals('E') && this.col==Constante.ANCHO-1) {
 			aux= 0;}
 		if (columna.equals('O')) {
-			aux= this.col--;}
+			aux= this.col-1;}
 		if (columna.equals('E')) {
-			aux=this.col++;}		
+			aux=this.col+1;}		
 		return aux;	
 	}
 	

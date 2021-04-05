@@ -228,11 +228,12 @@ public class Juego {
 		public void compruebaFinJuego() {
 			int aux;
 			int contador=0; 
-			for (aux = 0; aux < numJugadores-1; aux++){ 
-			if (jugadores[aux] !=null) {
-				contador++; 
-							}
+			boolean comprobador=true;
+			for (aux = 0; aux < numJugadores-1 && comprobador; aux++){ 
 			if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
+				comprobador=false;
+			}
+			if (comprobador== false) {
 				this.finished=true;
 			}
 			}

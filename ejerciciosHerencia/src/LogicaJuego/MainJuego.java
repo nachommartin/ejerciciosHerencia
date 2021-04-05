@@ -21,12 +21,15 @@ public class MainJuego {
 		char caracter= leerCaracter("Elige jugador:\n (E)lfo\n (G)uerrero\n (M)ago\n (O)gro");
 		j.crearJugador(caracter); 		
 		}
+		do {
+
 		System.out.println(j);
 		System.out.println(j.imprimeNombreJugadores());
 		System.out.println(j.imprimeValoreJugadores());
 		System.out.println(j.getJugadorTurno());
 		int dado= j.getMovimientoJugador();
 		System.out.println("La tirada es " + dado);
+
 		
 		for (int aux2 = 0; aux2 < dado && !j.isTerminado(); aux2++ ) {
 			char direccion = leerCaracter("¿Elige orientación:\n (N)orte\n (S)ur\n (E)ste\n (O)este");
@@ -35,6 +38,9 @@ public class MainJuego {
 			j.compruebaFinJuego();
 		}
 		j.proximoJugador();
+		}
+		while (!j.isTerminado());
+			System.out.println(j.getGanador());
 		}
 		catch (JuegoException je) {
 			System.out.println(je.getMessage());
