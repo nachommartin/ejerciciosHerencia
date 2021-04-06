@@ -85,27 +85,39 @@ public class Jugador extends Elemento{
 
 	public int nextFil(Character fila) {
 		int aux= this.fil;
-		if (fila.equals('N') && this.fil==0) {
+		switch (fila) {
+		case 'N': 
+		if (this.fil==0) {
 			aux= Constante.ALTO-1;}
-		if (fila.equals('S') && this.fil==Constante.ALTO-1) {
-			aux= 0;}
-		if (fila.equals('N')) {
+		else {
 			aux= this.fil-1;}
-		if (fila.equals('S')) {
+		break;
+		case 'S': 
+		if (this.fil==Constante.ALTO-1) {
+			aux= 0;}
+		else {
 			aux=this.fil+1;}
+		break;
+		}
 		return aux;
 	}
 	
 	public int nextCol(Character columna) {
 		int aux=this.col;
-		if (columna.equals('O') && this.col==0) {
+		switch (columna) {
+		case 'O':
+		if (this.col==0) {
 			aux= Constante.ANCHO-1;}
-		if (columna.equals('E') && this.col==Constante.ANCHO-1) {
-			aux= 0;}
-		if (columna.equals('O')) {
+		else {
 			aux= this.col-1;}
-		if (columna.equals('E')) {
-			aux=this.col+1;}		
+		break; 
+		case 'E':
+		if (this.col==Constante.ANCHO-1) {
+			aux= 0;}
+		else {
+			aux=this.col+1;}
+		break;
+	}
 		return aux;	
 	}
 	
@@ -124,3 +136,4 @@ public class Jugador extends Elemento{
 	
 	
 }
+
