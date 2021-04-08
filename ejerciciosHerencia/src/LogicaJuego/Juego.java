@@ -198,7 +198,8 @@ public class Juego {
 		StringBuilder cadena = new StringBuilder();
 		int aux; 
 		for (aux = 0; aux <= numJugadores-1; aux++){ 
-			cadena.append(jugadores[aux] + "\n");
+			if (jugadores[aux] !=null)
+				   cadena.append(jugadores[aux].Resumen() + "\n");
 		}
 		return cadena.toString(); 	
 		}
@@ -207,6 +208,7 @@ public class Juego {
 			StringBuilder cadena = new StringBuilder();
 			int aux; 
 			for (aux = 0; aux <= numJugadores-1; aux++){ 
+				if (jugadores[aux] !=null)
 				cadena.append(jugadores[aux].Resumen() + "\n");
 			}
 			return cadena.toString();
@@ -228,32 +230,38 @@ public class Juego {
 		public void compruebaFinJuego() {
 			int aux;
 			int contador=0; 
+ 			int numfalsos= jugadores.length;
 			boolean comprobador=true;
-			for (aux = 0; aux < numJugadores-1 && comprobador; aux++){ 
-			if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
-				comprobador=false;
+			for (aux = 0; aux < numJugadores && comprobador; aux++){
+				if (jugadores[aux] == null) {
+					numfalsos--;
+				}else if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
+				     comprobador=false;
+					this.finished=true;
+				}
 			}
-			if (comprobador== false) {
-				this.finished=true;
+	 			if (contador==1) { 		
+	 				this.finished=true;
 			}
-			}
-			if (contador==1) {
-				this.finished=true;
-			}
-				
+	 			if (numfalsos == 1) {				
+	 				this.finished=true;
+	 			}
+					
 		}
 		
 		
 		private void eliminarJugador(Jugador j) {
 			int aux;
 			boolean salir=true;
-			for (aux =0; aux<numJugadores-1 && salir; aux++){
+			for (aux =0; aux<numJugadores && salir; aux++){
 		        if (jugadores[aux]==j) {
-		        	jugadores[aux]=null;
 		        	tablero[jugadores[aux].getFil()][jugadores[aux].getCol()]= null;
+		        	jugadores[aux]=null;
 		        	salir=false;
-		        };		
+		        }	
 		}
+ 			compruebaFinJuego();
+
 		}
 		
 		public void proximoJugador() {
@@ -310,29 +318,29 @@ public class Juego {
 		   int fuerzaJugador2= (int) (Math.random() * j2.getFuerza());
 		   if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()==0 && j2.getDinero()==0) {
 			   eliminarJugador(j2); 
-			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + "";
+			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + " y lo ha matado";
 		   }
-		   if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()==0 && j2.getDinero()>=1) {
-			   j1.setDinero(j2.getDinero());
+		   else if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()==0 && j2.getDinero()>=1) {
+			   j1.setDinero(j1.getDinero()+j2.getDinero());
 			   j2.setDinero(0);
-			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + "";
+			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + " y le ha quitado el dinero";
 		   }
 		   else if (fuerzaJugador1>fuerzaJugador2 && j2.getPociones()>=1) {
 			   j2.setPociones(j2.getPociones()-1);
-			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + "";
+			   cadena= "El " + j1.toString() + " ha vencido a " + j2.toString() + " que ha perdido una poción";
 		   }
 		   else if (fuerzaJugador1<fuerzaJugador2 && j1.getPociones()>=1) {
 			   j1.setPociones(j1.getPociones()-1);
-			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + "";
+			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + " que ha perdido una poción";
 		   }	
 		   else if (fuerzaJugador1<fuerzaJugador2 && j1.getPociones()==0 && j1.getDinero()>=1) {
-			   j2.setDinero(j1.getDinero());
+			   j2.setDinero(j2.getDinero()+j1.getDinero());
 			   j1.setDinero(0);
-			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + "";
+			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + " y le ha quitado el dinero";
 		   }
 		   else {
 			   eliminarJugador(j1);
-			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + "";
+			   cadena= "El " + j2.toString() + " ha vencido a " + j1.toString() + " y lo ha matado";
 		   }
 		   return cadena; 
 	   }
@@ -341,19 +349,21 @@ public class Juego {
 		   String cadena=""; 
 		   int aux;
 			int contador=0; 
-			for (aux = 0; aux < numJugadores-1; aux++){ 
-			if (jugadores[aux] !=null) {
-				contador++; 
-							}
-			if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
-				cadena= "El ganador es " + jugadores[aux].toString();
-			}
+			for (aux = 0; aux < numJugadores; aux++){ 
+				if (jugadores[aux] !=null) {
+					contador++; 
+					if (jugadores[aux].getDinero()==Constante.NUM_DINERO) {
+						cadena= "El ganador es " + jugadores[aux].toString();
+					}
+				}
 			}
 			if (contador==1) {
-				cadena= "El ganador es " + jugadores[aux].toString();
+				for (aux =0; aux < numJugadores;aux++)
+					if(jugadores[aux] != null)
+						cadena= "El ganador es " + jugadores[aux].toString();
 			}
-		   return cadena;
-		   	   }
+		    return cadena;
+		  }
 	   
 	   public String moverJugador(char simbolo) {
 		   String cadena;
